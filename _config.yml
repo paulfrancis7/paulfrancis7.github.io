@@ -297,6 +297,11 @@ defaults:
       path: "talkmap/**"
     values:
       sitemap: false
+  # files folder (exclude PDFs and other static files from sitemap.xml)
+  - scope:
+      path: "files/**"
+    values:
+      sitemap: false
 
 
 # Sass/SCSS
