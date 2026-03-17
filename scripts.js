@@ -2,17 +2,41 @@
 let allPublications = [];
 let showingSelected = true;
 
+// Theme: apply saved preference or default to light
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const dark = saved === 'dark' || (!saved && prefersDark);
+  document.documentElement.classList.toggle('dark', dark);
+  updateThemeIcon(dark);
+}
+
+function updateThemeIcon(isDark) {
+  const icon = document.getElementById('theme-icon');
+  if (!icon) return;
+  icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  updateThemeIcon(isDark);
+}
+
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
+  initTheme();
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+
   // Load publications data
   loadPublications();
-  
+
   // Initialize animation delays for sections
   const sections = document.querySelectorAll('section');
   sections.forEach((section, index) => {
     section.style.animationDelay = `${index * 0.1}s`;
   });
-  
+
   // Add event listener for toggle button
   const toggleButton = document.getElementById('toggle-publications');
   if (toggleButton) {
