@@ -292,6 +292,11 @@ defaults:
       layout: talk
       author_profile: true
       share: true
+  # talkmap folder (exclude map.html etc. from sitemap.xml)
+  - scope:
+      path: "talkmap/**"
+    values:
+      sitemap: false
 
 
 # Sass/SCSS
