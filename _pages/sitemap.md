@@ -12,14 +12,22 @@ A list of all the posts and pages found on the site. For you robots out there, t
 <h2>Pages</h2>
 {% for post in site.pages %}
   {% if post.published != false and post.sitemap != false %}
-    {% include archive-single.html %}
+    {% assign t = post.title | strip %}
+    {% if t != "" and post.url != "/sitemap.xml" %}
+      {% unless post.path contains "markdown_generator" %}
+        {% include archive-single.html %}
+      {% endunless %}
+    {% endif %}
   {% endif %}
 {% endfor %}
 
 <h2>Posts</h2>
 {% for post in site.posts %}
   {% if post.published != false and post.sitemap != false %}
-    {% include archive-single.html %}
+    {% assign t = post.title | strip %}
+    {% if t != "" %}
+      {% include archive-single.html %}
+    {% endif %}
   {% endif %}
 {% endfor %}
 
@@ -36,7 +44,10 @@ A list of all the posts and pages found on the site. For you robots out there, t
 {% for post in collection.docs %}
   {% unless collection.output == false or collection.label == "posts" %}
     {% if post.published != false and post.sitemap != false %}
-      {% include archive-single.html %}
+      {% assign t = post.title | strip %}
+      {% if t != "" %}
+        {% include archive-single.html %}
+      {% endif %}
     {% endif %}
   {% endunless %}
 {% endfor %}
